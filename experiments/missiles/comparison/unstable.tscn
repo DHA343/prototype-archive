@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://experiments/missiles/comparison/missile.tscn" id="1"]
+
+[node name="Missile" unique_id=868997473 instance=ExtResource("1")]
+approach_spread = 45.0

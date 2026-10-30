@@ -25,7 +25,7 @@ extends Node
 
 		if _is_initialized:
 			rebuild_effects()
-
+ 
 var _is_initialized: bool = false
 var _effect_bindings: Array[EffectBinding] = []
 var _generated_layers: Array[CanvasLayer] = []

@@ -1,7 +1,7 @@
 # Cell Emission
 
 CRT ResourceのMask ModelをCell Emissionに設定する。
-Chromatic Aberration / Ghost（pass 0）→ Signal / Scanline（pass 1）→ Cell Emission（pass 2）→ Texture（pass 3）→ Optical Spread（pass 4）→ Phosphor Bloom（pass 5）。
+Chromatic Aberration（pass 0）→ Signal / Scanline（pass 1）→ Cell Emission（pass 2）→ Texture（pass 3）→ Optical Spread（pass 4）→ Phosphor Bloom（pass 5）。
 Mask Redistributionはpass 1でmaskを適用し、pass 2を止める。
 Cell専用のSubViewportは追加しない。Bloom Coreにも同じMask設定が反映される。
 

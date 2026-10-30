@@ -10,8 +10,6 @@ uniform vec2 rgb_blue_offset = vec2(2.0, -0.5);
 uniform float rgb_red_radial : hint_range(-8.0, 8.0, 0.1) = -2.0;
 uniform float rgb_blue_radial : hint_range(-8.0, 8.0, 0.1) = 2.0;
 uniform float rgb_strength : hint_range(0.0, 1.0, 0.01) = 0.3;
-uniform float ghost_radial : hint_range(-16.0, 16.0, 0.1) = 5.0;
-uniform float ghost_strength : hint_range(0.0, 1.0, 0.01) = 0.2;
 
 
 vec3 sample_offset(vec2 screen_uv, vec2 pixel_size, vec2 offset) {
@@ -53,13 +51,6 @@ void fragment() {
 		weighted_color += separated_color * rgb_strength;
 		total_weight += rgb_strength;
 	}
-	if (ghost_strength > 0.0 && ghost_radial != 0.0) {
-		vec2 offset = radial_offset(SCREEN_UV, SCREEN_PIXEL_SIZE, ghost_radial);
-		weighted_color += sample_offset(SCREEN_UV, SCREEN_PIXEL_SIZE, offset) * ghost_strength;
-		total_weight += ghost_strength;
-	}
-
-	// Both secondary images share the original signal; neither ghosts the other.
 	// Normalized weights preserve constant colors and HDR levels without clipping.
 	COLOR = vec4(weighted_color / total_weight, screen_color.a);
 }

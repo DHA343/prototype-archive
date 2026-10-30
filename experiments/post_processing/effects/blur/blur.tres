@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://p60e7ghy5huc"]
+
+[ext_resource type="Script" uid="uid://gxtfjwgcq4l1" path="res://experiments/post_processing/effects/blur/blur.gd" id="1_effect"]
+
+[resource]
+resource_name = "Blur"
+script = ExtResource("1_effect")
+parameters = {
+&"mode": 5,
+&"strength": 0.499999988824
+}

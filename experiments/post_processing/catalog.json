@@ -15,7 +15,8 @@
 			"Hue",
 			"Gamma"
 		],
-		"script": "res://experiments/post_processing/effects/color_grading/color_grading.gd"
+		"script": "res://experiments/post_processing/effects/color_grading/color_grading.gd",
+		"resource": "res://experiments/post_processing/effects/color_grading/color_grading.tres"
 	},
 	{
 		"id": "color_transform",
@@ -32,7 +33,8 @@
 			"Thermal",
 			"Night Vision"
 		],
-		"script": "res://experiments/post_processing/effects/color_transform/color_transform.gd"
+		"script": "res://experiments/post_processing/effects/color_transform/color_transform.gd",
+		"resource": "res://experiments/post_processing/effects/color_transform/color_transform.tres"
 	},
 	{
 		"id": "dithering",
@@ -44,7 +46,8 @@
 			"Random",
 			"Blue Noise"
 		],
-		"script": "res://experiments/post_processing/effects/dithering/dithering.gd"
+		"script": "res://experiments/post_processing/effects/dithering/dithering.gd",
+		"resource": "res://experiments/post_processing/effects/dithering/dithering.tres"
 	},
 	{
 		"id": "pixelation",
@@ -56,7 +59,8 @@
 			"Low Resolution Nearest",
 			"Low Resolution Bilinear"
 		],
-		"script": "res://experiments/post_processing/effects/pixelation/pixelation.gd"
+		"script": "res://experiments/post_processing/effects/pixelation/pixelation.gd",
+		"resource": "res://experiments/post_processing/effects/pixelation/pixelation.tres"
 	},
 	{
 		"id": "print",
@@ -68,7 +72,8 @@
 			"Paper",
 			"Misregistration"
 		],
-		"script": "res://experiments/post_processing/effects/print/print.gd"
+		"script": "res://experiments/post_processing/effects/print/print.gd",
+		"resource": "res://experiments/post_processing/effects/print/print.tres"
 	},
 	{
 		"id": "detail",
@@ -80,7 +85,8 @@
 			"Outline",
 			"Emboss"
 		],
-		"script": "res://experiments/post_processing/effects/detail/detail.gd"
+		"script": "res://experiments/post_processing/effects/detail/detail.gd",
+		"resource": "res://experiments/post_processing/effects/detail/detail.tres"
 	},
 	{
 		"id": "painting",
@@ -91,7 +97,8 @@
 			"Color Planes",
 			"Comic"
 		],
-		"script": "res://experiments/post_processing/effects/painting/painting.gd"
+		"script": "res://experiments/post_processing/effects/painting/painting.gd",
+		"resource": "res://experiments/post_processing/effects/painting/painting.tres"
 	},
 	{
 		"id": "blur",
@@ -104,7 +111,8 @@
 			"Zoom",
 			"Tilt Shift"
 		],
-		"script": "res://experiments/post_processing/effects/blur/blur.gd"
+		"script": "res://experiments/post_processing/effects/blur/blur.gd",
+		"resource": "res://experiments/post_processing/effects/blur/blur.tres"
 	},
 	{
 		"id": "lens",
@@ -118,7 +126,8 @@
 			"Lens Ghosts",
 			"Lens Dirt"
 		],
-		"script": "res://experiments/post_processing/effects/lens/lens.gd"
+		"script": "res://experiments/post_processing/effects/lens/lens.gd",
+		"resource": "res://experiments/post_processing/effects/lens/lens.tres"
 	},
 	{
 		"id": "distortion",
@@ -133,7 +142,8 @@
 			"Swirl",
 			"Kaleidoscope"
 		],
-		"script": "res://experiments/post_processing/effects/distortion/distortion.gd"
+		"script": "res://experiments/post_processing/effects/distortion/distortion.gd",
+		"resource": "res://experiments/post_processing/effects/distortion/distortion.tres"
 	},
 	{
 		"id": "film",
@@ -146,20 +156,17 @@
 			"Flicker",
 			"Film Weave"
 		],
-		"script": "res://experiments/post_processing/effects/film/film.gd"
+		"script": "res://experiments/post_processing/effects/film/film.gd",
+		"resource": "res://experiments/post_processing/effects/film/film.tres"
 	},
 	{
 		"id": "vhs",
 		"title": "VHS",
 		"modes": [
-			"VHS Composite",
-			"Color Bleed",
-			"Tape Tearing",
-			"Tracking Noise",
-			"Interlace",
-			"Vertical Roll"
+			"VHS"
 		],
-		"script": "res://experiments/post_processing/effects/vhs/vhs.gd"
+		"script": "res://experiments/post_processing/effects/vhs/vhs.gd",
+		"resource": "res://experiments/post_processing/effects/vhs/vhs.tres"
 	},
 	{
 		"id": "glitch",
@@ -171,7 +178,8 @@
 			"Local Inversion",
 			"Compression Damage"
 		],
-		"script": "res://experiments/post_processing/effects/glitch/glitch.gd"
+		"script": "res://experiments/post_processing/effects/glitch/glitch.gd",
+		"resource": "res://experiments/post_processing/effects/glitch/glitch.tres"
 	},
 	{
 		"id": "display",
@@ -182,7 +190,8 @@
 			"Dot Matrix",
 			"Glass Reflection"
 		],
-		"script": "res://experiments/post_processing/effects/display/display.gd"
+		"script": "res://experiments/post_processing/effects/display/display.gd",
+		"resource": "res://experiments/post_processing/effects/display/display.tres"
 	},
 	{
 		"id": "overlay",
@@ -195,7 +204,8 @@
 			"Wipe",
 			"Dissolve"
 		],
-		"script": "res://experiments/post_processing/effects/overlay/overlay.gd"
+		"script": "res://experiments/post_processing/effects/overlay/overlay.gd",
+		"resource": "res://experiments/post_processing/effects/overlay/overlay.tres"
 	},
 	{
 		"id": "temporal",
@@ -209,7 +219,8 @@
 			"Frame Hold",
 			"Temporal AA"
 		],
-		"script": "res://experiments/post_processing/effects/temporal/temporal.gd"
+		"script": "res://experiments/post_processing/effects/temporal/temporal.gd",
+		"resource": "res://experiments/post_processing/effects/temporal/temporal.tres"
 	},
 	{
 		"id": "auto_exposure",
@@ -217,7 +228,8 @@
 		"modes": [
 			"Auto Exposure"
 		],
-		"script": "res://experiments/post_processing/effects/auto_exposure/auto_exposure.gd"
+		"script": "res://experiments/post_processing/effects/auto_exposure/auto_exposure.gd",
+		"resource": "res://experiments/post_processing/effects/auto_exposure/auto_exposure.tres"
 	},
 	{
 		"id": "target",
@@ -227,7 +239,8 @@
 			"Target Glow",
 			"Target Distortion"
 		],
-		"script": "res://experiments/post_processing/effects/target/target.gd"
+		"script": "res://experiments/post_processing/effects/target/target.gd",
+		"resource": "res://experiments/post_processing/effects/target/target.tres"
 	},
 	{
 		"id": "motion_blur",
@@ -235,7 +248,8 @@
 		"modes": [
 			"Object Motion Blur"
 		],
-		"script": "res://experiments/post_processing/effects/motion_blur/motion_blur.gd"
+		"script": "res://experiments/post_processing/effects/motion_blur/motion_blur.gd",
+		"resource": "res://experiments/post_processing/effects/motion_blur/motion_blur.tres"
 	},
 	{
 		"id": "crt",
@@ -243,7 +257,8 @@
 		"modes": [
 			"CRT"
 		],
-		"script": "res://experiments/post_processing/effects/crt/crt.gd"
+		"script": "res://experiments/post_processing/effects/crt/crt.gd",
+		"resource": "res://experiments/post_processing/effects/crt/crt.tres"
 	},
 	{
 		"id": "pseudo_3d",
@@ -261,7 +276,8 @@
 			"SSIL (pseudo)",
 			"Volumetric Fog (pseudo)"
 		],
-		"script": "res://experiments/post_processing/effects/pseudo_3d/pseudo_3d.gd"
+		"script": "res://experiments/post_processing/effects/pseudo_3d/pseudo_3d.gd",
+		"resource": "res://experiments/post_processing/effects/pseudo_3d/pseudo_3d.tres"
 	},
 	{
 		"id": "antialiasing",
@@ -270,7 +286,8 @@
 			"FXAA",
 			"Morphological AA"
 		],
-		"script": "res://experiments/post_processing/effects/antialiasing/antialiasing.gd"
+		"script": "res://experiments/post_processing/effects/antialiasing/antialiasing.gd",
+		"resource": "res://experiments/post_processing/effects/antialiasing/antialiasing.tres"
 	},
 	{
 		"id": "vignette",
@@ -278,7 +295,8 @@
 		"modes": [
 			"Vignette"
 		],
-		"script": "res://experiments/post_processing/effects/vignette/vignette.gd"
+		"script": "res://experiments/post_processing/effects/vignette/vignette.gd",
+		"resource": "res://experiments/post_processing/effects/vignette/vignette.tres"
 	},
 	{
 		"id": "chromatic_aberration",
@@ -286,7 +304,8 @@
 		"modes": [
 			"Chromatic Aberration"
 		],
-		"script": "res://experiments/post_processing/effects/chromatic_aberration/chromatic_aberration.gd"
+		"script": "res://experiments/post_processing/effects/chromatic_aberration/chromatic_aberration.gd",
+		"resource": "res://experiments/post_processing/effects/chromatic_aberration/chromatic_aberration.tres"
 	},
 	{
 		"id": "display_texture",
@@ -294,7 +313,8 @@
 		"modes": [
 			"Texture Overlay"
 		],
-		"script": "res://experiments/post_processing/effects/display_texture/display_texture.gd"
+		"script": "res://experiments/post_processing/effects/display_texture/display_texture.gd",
+		"resource": "res://experiments/post_processing/effects/display_texture/display_texture.tres"
 	},
 	{
 		"id": "glow",
@@ -302,7 +322,8 @@
 		"modes": [
 			"Glow (existing)"
 		],
-		"script": "res://experiments/post_processing/effects/glow/glow.gd"
+		"script": "res://experiments/post_processing/effects/glow/glow.gd",
+		"resource": "res://experiments/post_processing/effects/glow/glow.tres"
 	},
 	{
 		"id": "tone_mapping",
@@ -316,6 +337,7 @@
 			"Filmic",
 			"Logarithmic"
 		],
-		"script": "res://experiments/post_processing/effects/tone_mapping/tone_mapping.gd"
+		"script": "res://experiments/post_processing/effects/tone_mapping/tone_mapping.gd",
+		"resource": "res://experiments/post_processing/effects/tone_mapping/tone_mapping.tres"
 	}
 ]

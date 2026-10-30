@@ -15,8 +15,6 @@ Gap・Sampling・段のずれ幅・明るさ倍率の設定は持たず、内部
 | RGB Blue Offset | 各軸 −8〜8 px | (2, −0.5) px | 0.1 | Fixedでの青成分の位置。初期値は青が右。緑は元の位置を維持し、赤青は独立したXY設定 |
 | RGB Strength | 0〜1 | 0.3 | 0.01 | 元の像の重み1に対するRGB分離像の重み。0で無効。副像へ置換せず元の輪郭を残す |
 | Red / Blue Radial | −8〜8 px | −2 / 2 px | 0.1 | Radialでの赤・青の拡大縮小量。画面の隅での像の移動距離。正は外側、負は内側。緑は元の位置 |
-| Ghost Radial | −16〜16 px | 5 px | 0.1 | フルカラーの副像の拡大縮小量。中心で一致し、周辺ほどズレる。正は外側、負は内側 |
-| Ghost Strength | 0〜1 | 0.2 | 0.01 | 元の像の重み1に対するフルカラー副像の重み。0で無効 |
 | Scanline Count | 180〜720 | 360 | 1 | 縦方向の再構成の行数と走査線模様の周期を共用する。1080pで初期値は1行あたり3出力px。範囲は調整用 |
 | Signal Prefilter Enabled | OFF / ON | ON | — | 信号の各サンプルが担当する元画像の範囲を平均してから補間する。細線がサンプル間に落ちて消えることを抑える。OFFで従来の点サンプリング。Signal EnabledがOFFなら無効 |
 | Sharpness | 0.5〜1.0 | 0.67 | 0.01 | 横方向のkernelを広げるほど低い値。範囲は半径2〜1サンプル間隔に対応 |
@@ -44,33 +42,25 @@ stepは原則1 / 0.1 / 0.01 / 0.001。Mask PitchとRow Heightは整数。
 Far Strength は0.001刻みで微調整する。初期値0.05の2%ずつ調整できる。
 初期値・範囲・Scene保存値はstep変更に合わせて丸めない。
 
-## Chromatic AberrationとGhost
+## Chromatic Aberration
 
-Pass 0で元の信号からRGB分離像とフルカラー副像を作り、その後にSignal / Scanline、Mask、
+Pass 0で元の信号からRGB分離像を作り、その後にSignal / Scanline、Mask、
 Texture、Optical Spread、Bloomを適用する。MaskやTextureの配置を移動しない。
-RGB分離像とGhostはどちらも同じ入力から作り、片方をもう片方へ重ねて二重処理しない。
-Chromatic AberrationはFixed / Radialを選ぶ。Fixedの既存XY値は保持し、方式を戻せば再使用できる。
-GhostはRadialだけを持ち、旧方式の一方向のOffsetは削除した。
-追加の専用ブラー・連続した尾・時間変化は持たない。
+Fixed / Radialを選ぶ。Fixedの既存XY値は保持し、方式を戻せば再使用できる。
+フルカラー副像を重ねるGhostの設定・処理は持たない。
 
 Radialは画面中心(0.5, 0.5)で一致する一様な拡大・縮小。
 出力pixelで測った画面の半対角長をR、Radialの値をaとして、像の倍率を `1 + a / R` とする。
 読み取りは `center + (uv - center) / scale`。像の移動距離は中心からの距離に比例し、隅でa px。
 縦横比が変わってもpixel空間で同じ倍率になる。正は拡大、負は縮小。
 極端に小さいViewportで負の値がRを超えても反転しないよう、倍率の下限を0.01とする。
-細かなズレは柔らかさ、大きなズレは周辺の二重輪郭として見える。Radial Blurではない。
 
-合成は `(original + r * rgb_separated + g * ghost) / (1 + r + g)`。
-r / gは有効なRGB Strength / Ghost Strengthで、Strength 0または選択中の方式のズレ量が全て0なら
-その項を重みごと除外する。両方が無効ならPass 0と画面コピーを止める。
-Strengthは混合率そのものではなく元の像に対する重み。単独で1なら元の像と副像が半分ずつ、
-両方1なら元の像・RGB分離像・Ghostがそれぞれ3分の1となる。
+合成は `(original + r * rgb_separated) / (1 + r)`。rはRGB Strength。
+Strength 0または選択中の方式のズレ量が全て0ならPass 0と画面コピーを止める。
+Strength 1では元の像とRGB分離像を半分ずつ混合する。
 均一なRGB / HDR値を保ち、clampや加算による明るさ増加は行わない。alphaは元のpixelを維持する。
-
 FixedのOffsetは副像の見える方向を表し、読み取りは逆方向へ行う。画面外は端のpixelを延長する。
 線形補間により整数未満の位置も連続して変化する。
-初期値は演出を確認する出発点で、実機計測値ではない。各Strength 0で独立に無効化できる。
-既存のChromaticAberrationファイルは残し、CRTテストシーンの配置だけを除去した。
 
 ## Mask ModelとPattern
 
@@ -235,7 +225,7 @@ Strengthは変動の上限であり、出力での実測contrastを表すもの�
 各格子に5回のhashを使う。方式を固定してもpass数・texture数は増えない。
 
 Textureはpass 3。Enabled OFFまたはStrength 0で、メイン描画とBloom Core再描画のpass / BackBufferCopyを無効化する。
-Optical Spreadはpass 4、Bloomはpass 5。BloomのCoreにもChromatic Aberration / Ghost・Texture・Spreadを同じ順序・同じ設定で再描画する。
+Optical Spreadはpass 4、Bloomはpass 5。BloomのCoreにもChromatic Aberration・Texture・Spreadを同じ順序・同じ設定で再描画する。
 有効時はSpreadで粒が柔らかくなり、Bloomでムラを含む発光が広がる。後段を含めた色比率・平均輝度の不変は保証しない。
 全画面pass数は最大6。Radial用のpassは追加せず、Texture用SubViewport・textureも追加しない。
 旧Noise Enabledの保存値はTexture Enabledへ移行した。

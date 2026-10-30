@@ -1,0 +1,167 @@
+{
+  "date": "2026-10-29",
+  "godot": "4.7.2",
+  "notes": "Historical layout comparison before the full-height side walls and 128px tapered flippers. These are not measurements of the current geometry. Live Godot AI playtests; each profile runs for 20 simulated seconds. Fixed pulse and contact-reactive inputs are in playtest.gd. Counts describe these samples, not all possible play.",
+  "samples": {
+    "baseline_reactive": {
+      "bumpers": {
+        "Left": 1,
+        "Right": 3
+      },
+      "counts": {
+        "bumper_hits": 4,
+        "drains": 1,
+        "flipper_hits": 42
+      },
+      "max_speed": 520,
+      "policy": "reactive",
+      "seconds": 20,
+      "stalled_seconds": 0.0333333333333333,
+      "top_y": 116.796295166016
+    },
+    "baseline_timed": {
+      "bumpers": {
+        "Center": 1,
+        "Right": 1
+      },
+      "counts": {
+        "bumper_hits": 2,
+        "drains": 2,
+        "flipper_hits": 43
+      },
+      "max_speed": 520,
+      "policy": "timed",
+      "seconds": 20,
+      "stalled_seconds": 0.0666666666666667,
+      "top_y": 90.9528427124023
+    },
+    "iteration1_reactive": {
+      "bumpers": {
+        "Center": 6,
+        "Left": 4,
+        "Right": 2
+      },
+      "counts": {
+        "bumper_hits": 12,
+        "drains": 1,
+        "flipper_hits": 82
+      },
+      "max_speed": 520,
+      "policy": "reactive",
+      "seconds": 20,
+      "stalled_seconds": 0.0833333333333333,
+      "top_y": 245.263748168945
+    },
+    "iteration1_timed": {
+      "bumpers": {
+        "Center": 5,
+        "Left": 1
+      },
+      "counts": {
+        "bumper_hits": 6,
+        "drains": 0,
+        "flipper_hits": 75
+      },
+      "max_speed": 520,
+      "policy": "timed",
+      "seconds": 20,
+      "stalled_seconds": 0.05,
+      "top_y": 137.154006958008
+    },
+    "iteration2_reactive": {
+      "bumpers": {
+        "Left": 5
+      },
+      "counts": {
+        "bumper_hits": 5,
+        "drains": 1,
+        "flipper_hits": 82
+      },
+      "max_speed": 520,
+      "policy": "reactive",
+      "seconds": 20,
+      "stalled_seconds": 0.466666666666667,
+      "top_y": 282.143585205078
+    },
+    "iteration2_timed": {
+      "bumpers": {
+        "Left": 2,
+        "Right": 7
+      },
+      "counts": {
+        "bumper_hits": 9,
+        "drains": 3,
+        "flipper_hits": 89
+      },
+      "max_speed": 520,
+      "policy": "timed",
+      "seconds": 20,
+      "stalled_seconds": 0.3,
+      "top_y": 122.206909179688
+    },
+    "iteration3_reactive": {
+      "bumpers": {
+        "Center": 1
+      },
+      "counts": {
+        "bumper_hits": 1,
+        "drains": 0,
+        "flipper_hits": 70
+      },
+      "max_speed": 520,
+      "policy": "reactive",
+      "seconds": 20,
+      "stalled_seconds": 0.05,
+      "top_y": 108.944786071777
+    },
+    "iteration3_timed": {
+      "bumpers": {
+        "Left": 1
+      },
+      "counts": {
+        "bumper_hits": 1,
+        "drains": 1,
+        "flipper_hits": 81
+      },
+      "max_speed": 520.000061035156,
+      "policy": "timed",
+      "seconds": 20,
+      "stalled_seconds": 0.0666666666666667,
+      "top_y": 100.967178344727
+    },
+    "iteration4_reactive": {
+      "bumpers": {
+        "Center": 1,
+        "Left": 5,
+        "Right": 3
+      },
+      "counts": {
+        "bumper_hits": 9,
+        "drains": 1,
+        "flipper_hits": 102
+      },
+      "max_speed": 520,
+      "policy": "reactive",
+      "seconds": 20,
+      "stalled_seconds": 0.133333333333333,
+      "top_y": 194.100769042969
+    },
+    "iteration4_timed": {
+      "bumpers": {
+        "Center": 3,
+        "Left": 1,
+        "Right": 1
+      },
+      "counts": {
+        "bumper_hits": 5,
+        "drains": 1,
+        "flipper_hits": 82
+      },
+      "max_speed": 520,
+      "policy": "timed",
+      "seconds": 20,
+      "stalled_seconds": 0.183333333333333,
+      "top_y": 122.13916015625
+    }
+  }
+}

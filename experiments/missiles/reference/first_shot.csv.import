@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dyl7vhaeealdv"
+
+[deps]
+
+files=["res://experiments/missiles/reference/first_shot.time.translation", "res://experiments/missiles/reference/first_shot.hermite.translation", "res://experiments/missiles/reference/first_shot.hermite.translation", "res://experiments/missiles/reference/first_shot.spiral.translation", "res://experiments/missiles/reference/first_shot.spiral.translation"]
+
+source_file="res://experiments/missiles/reference/first_shot.csv"
+dest_files=["res://experiments/missiles/reference/first_shot.time.translation", "res://experiments/missiles/reference/first_shot.hermite.translation", "res://experiments/missiles/reference/first_shot.hermite.translation", "res://experiments/missiles/reference/first_shot.spiral.translation", "res://experiments/missiles/reference/first_shot.spiral.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

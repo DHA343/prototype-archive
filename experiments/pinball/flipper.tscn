@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://experiments/pinball/flipper.gd" id="1"]
+
+[sub_resource type="ConvexPolygonShape2D" id="Shape"]
+resource_local_to_scene = true
+points = PackedVector2Array(0.3402, -7.0230, 87.3236, -2.8092, 88.0244, -2.6851, 88.6716, -2.3891, 89.2238, -1.9400, 89.6456, -1.3667, 89.9099, -0.7060, 90.0000, 0.0000, 89.9099, 0.7060, 89.6456, 1.3667, 89.2238, 1.9400, 88.6716, 2.3891, 88.0244, 2.6851, 87.3236, 2.8092, 0.3402, 7.0230, -0.6076, 7.0050, -1.5445, 6.8595, -2.4532, 6.5894, -3.3173, 6.1995, -4.1212, 5.6969, -4.8501, 5.0907, -5.4908, 4.3920, -6.0318, 3.6134, -6.4630, 2.7692, -6.7768, 1.8745, -6.9673, 0.9458, -7.0313, 0.0000, -6.9673, -0.9458, -6.7768, -1.8745, -6.4630, -2.7692, -6.0318, -3.6134, -5.4908, -4.3920, -4.8501, -5.0907, -4.1212, -5.6969, -3.3173, -6.1995, -2.4532, -6.5894, -1.5445, -6.8595, -0.6076, -7.0050)
+
+[node name="Flipper" type="StaticBody2D"]
+physics_interpolation_mode = 1
+collision_layer = 1
+collision_mask = 2
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Shape")

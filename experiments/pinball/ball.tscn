@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://experiments/ball/ball.tscn" id="1"]
+[ext_resource type="Script" path="res://experiments/pinball/ball.gd" id="2"]
+
+[sub_resource type="CircleShape2D" id="Shape"]
+radius = 6.0
+
+[node name="Ball" instance=ExtResource("1")]
+script = ExtResource("2")
+gravity = 630.0
+max_speed = 600.0
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("Shape")

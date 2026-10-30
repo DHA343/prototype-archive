@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://experiments/missiles/visuals.gd" id="1"]
+[ext_resource type="Shader" path="res://experiments/missiles/particles.gdshader" id="2"]
+[ext_resource type="Shader" path="res://experiments/missiles/particle_pixels.gdshader" id="3"]
+
+[sub_resource type="ShaderMaterial" id="Process"]
+shader = ExtResource("2")
+
+[sub_resource type="ShaderMaterial" id="Pixels"]
+resource_local_to_scene = true
+shader = ExtResource("3")
+
+[sub_resource type="Gradient" id="White"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="Texture"]
+gradient = SubResource("White")
+width = 3
+height = 3
+
+[node name="Visuals" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+show_behind_parent = true
+material = SubResource("Pixels")
+emitting = false
+amount = 1024
+lifetime = 1.0
+local_coords = false
+fixed_fps = 60
+fract_delta = false
+interpolate = false
+visibility_rect = Rect2(-4096, -4096, 8192, 8192)
+process_material = SubResource("Process")
+texture = SubResource("Texture")

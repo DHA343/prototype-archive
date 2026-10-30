@@ -1,0 +1,15 @@
+[gd_resource type="Resource" format=3 uid="uid://bg1ft2klbc3d6"]
+
+[ext_resource type="Script" uid="uid://crvlfdxhotpcq" path="res://experiments/post_processing/effects/painting/painting.gd" id="1_effect"]
+
+[resource]
+resource_name = "Painting"
+script = ExtResource("1_effect")
+parameters = {
+&"color_sigma": 0.17999999597665,
+&"levels": 5,
+&"mode": 0,
+&"radius": 3.5,
+&"strength": 0.999999977648
+}
+enabled = false

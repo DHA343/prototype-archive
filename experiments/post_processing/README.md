@@ -1,13 +1,14 @@
 # Post-processing experiments
 
 このフォルダは実験用ポストプロセスと確認シーンの保存先。正式採用済みの実装を示すものではない。
-現在は27グループ、130モードを収録。うち既存実装を参照する5グループを含む。
-一覧は [CATALOG.md](CATALOG.md)、グループ・モード・Resourceスクリプトの対応は `catalog.json`。
+現在は27グループ、125モードを収録。うち既存実装を参照する5グループを含む。
+追加用Resourceの一覧は [CATALOG.md](CATALOG.md)。
+グループ・モード・Resourceファイル・スクリプトの対応は `catalog.json`。
 
 ## 起動と入力
 
 `testbed/testbed.tscn` または `presets/crt.tscn` を開いてF6で実行する。
-起動時は実際の `main/main.tscn` を表示する。
+初回起動時は実際の `main/main.tscn` を表示し、次回以降は前回の選択を復元する。
 
 - `1`: main。シミュレーションを再開する。
 - `2`: 共通テストパターン。背景は黒で固定。
@@ -16,6 +17,13 @@
 - パターンはプロジェクトの論理解像度による拡大縮小を相殺する。mainの描画倍率は変更しない。
 - 1280×720より小さい表示領域では、細線の幅を保つためパターンの外周を切り取る。
 - パターンには細線、階調、色、半透明の重なり、文字、線形HDRの1x/2x/4x/8x/16xを含む。
+
+1 / 2 / 3の選択と、画像表示時の画像パスを `res://_temp/testbed_state.cfg` に保存する。
+共通testbedと全プリセットで一つの状態を共有し、切替時に更新する。
+画像は自動収集済みの一覧からパスで復元し、追加・並べ替えで番号が変わっても同じ画像を選ぶ。
+保存画像が見つからない場合はパターンへ、状態ファイルがない・読めない・選択値が無効な場合はmainへ戻る。
+Editorからの開発用実行で使用し、`user://`には保存しない。`_temp/`はGit管理対象外。
+初期化する場合はゲームを停止し、`_temp/testbed_state.cfg`を削除する。
 
 mainは複製した専用シーンではなく元のPackedSceneを生成するため、mainの保存済み変更は
 testbedの次回起動に反映される。testbed実行時の調整はmainの保存ファイルへ書き戻さない。
@@ -35,7 +43,15 @@ testbedのLayer2/Labelsはパターン専用の説明で、Labelsだけを入力
 
 実行時のエフェクト編集パネルは設けない。testbedまたは各プリセットシーンのPostProcessingを
 Inspectorで編集し、Layer 1 Effects / Layer 2 Effects配列にエフェクトのResourceを設定する。
-各グループのResourceスクリプトは一覧から確認できる。
+[一覧](CATALOG.md)にある `<group>.tres` をFileSystemから配列へドラッグする。
+例えばPaintingは `effects/painting/painting.tres` を使用する。
+各Resourceの表示名は `Painting` のようにエフェクト名のみとする。
+実験用であることはフォルダ配置で示し、個別ファイル名・クラス名・表示名へExperimentalを付けない。
+まずはそのまま追加し、実行中にResourceの設定値を調整する。
+同じResourceを参照するプリセットでは設定が共有される。プリセットごとに分けたい場合は、
+FileSystemで.tres自体を複製し、別名のファイルを配列へ追加してから調整する。
+実験Resourceの設定はDictionaryに保存するため、通常の「ユニーク化」だけでは
+Dictionaryの共有が残る。これを設定分離の手順として使用しない。
 
 - Layer 1 Effects: Layer1までに描かれた画面全体へ適用する。
 - Layer 2 Effects: Layer2までに描かれた画面全体へ適用する。Layer1とその加工結果も含む。
@@ -44,7 +60,16 @@ Inspectorで編集し、Layer 1 Effects / Layer 2 Effects配列にエフェク�
 - Enabled: PostProcessingでは全体、個別ResourceではそのエフェクトのON/OFF。
 - 同じグループを複数回使う場合は、別のResourceインスタンスを設定する。同一インスタンスの重複登録は無視される。
 
+VHSは録画・再生側の信号加工、CRTは表示側の走査線・マスク・発光を担当する。
+組み合わせる場合はVHS → CRTの順に置き、マスクをVHSで揺らさない。
+VHSはMode切替を設けず、InspectorをPlayback / Luma / Chroma / Time Base / Dropoutに分ける。
+各設定の単位・無加工条件は [VHSの調整](effects/vhs/PARAMETERS.md) を参照する。
+
 保存する設定はシーン・ResourceをInspectorで編集して保存する。
+追加用ResourceはLocal to SceneをOFFにし、実行時の自動複製を行わない。
+Editorのライブ編集（シーン変更の同期）が有効な状態で、Local InspectorまたはFileSystemから
+実行中に使っているResourceを開いて数値・Modeを変更する。設定を残す場合はResourceを保存する。
+すでにONで起動したゲームには設定変更が遡及しないため、一度停止して再実行する。
 実行中の一時調整にはRemote Inspectorを使う。Remoteでの変更はシーンファイルには自動保存されない。
 Mode変更時の処理構成の更新はtestbed側が行うため、実行時パネルに依存しない。
 スクリプトから実行中の配列をappend/remove/並べ替えする場合は、変更後にrebuild_effects()を呼ぶ。
@@ -62,6 +87,10 @@ GodotがインポートできるPNG / JPEG / WebP / BMP / SVG等の画像を使�
 最初のプリセットは `presets/crt.tscn`。グループごとの単体previewは作成しない。
 
 `effects/<group>/` にResourceスクリプト、シェーダー、仕様書を置く。
+配列へ追加するための `<group>.tres` も同じフォルダに置く。
+追加用Resourceは既存の実装と初期値を使い、Local to SceneをOFFにする。
+実験時にLocal Inspectorから値を調整してライブ反映できる構成を優先する。
+同じResourceを使う複数のインスタンスでは、変更も共有される。
 同じ役割の方式はModeにまとめる。
 例外としてCRTは従来の複数パス・仕様書を同じフォルダ内に保持する。
 既存のVignette、Chromatic Aberration、Display Texture、Glowは参照する薄いResourceを置く。
@@ -77,15 +106,16 @@ RenderLayersとPostProcessingは正式側の共通基盤を参照し、実験用
 
 1. `testbed/testbed.tscn` を元にGodot Editorで「新しい継承シーン」を作成する。
 2. `presets/<任意の名前>.tscn` に保存する。プリセットはシーン名で識別する。
-3. PostProcessingのLayer 1 Effects / Layer 2 EffectsにResourceを追加する。
-   [一覧](CATALOG.md)のResourceスクリプトを割り当て、Modeと各パラメータを調整する。
-4. エフェクトResourceはシーン内に保存し、Local to SceneをONにする。
-   既存Resourceを流用する場合は「ユニーク化」してから編集する。
+3. [一覧](CATALOG.md)の `<group>.tres` を、
+   PostProcessingのLayer 1 Effects / Layer 2 Effectsへドラッグする。
+4. プリセット専用の設定にしたい場合は、手順3の前に.tresをFileSystemで複製し、
+   そのファイルを使用する。Local to SceneはOFFのままにする。Scriptの差し替えは不要。
 5. シーンを保存し、F6で実行する。入力切替と画像収集は共通testbedから引き継ぐ。
 
 既存の `presets/crt.tscn` を複製して、配列の構成や調整値を変更してもよい。
-調整値は各シーンの組み込みResourceに保存するため、別プリセットの設定と共有しない。
-外部の同じResourceファイルを参照すれば値が共有されるため、意図的に共有する場合だけ使用する。
+外部の同じResourceファイルを参照すれば値も共有される。
+プリセット間の設定を独立させる場合は、Resourceファイルも複製して別々に保持する。
+従来のCRTプリセットはシーン内の組み込みResourceとLocal to Sceneの設定を保持している。
 共通testbedの変更は継承先にも反映される。プリセット側で上書きした項目は、その値を優先する。
 
 ## 擬似3D
@@ -131,7 +161,7 @@ LUTはN×N×Nの立方体をN²×Nの横長画像に配置し、Bのスライス
 `effects/crt/crt.gd`（クラス名: `CRT`）と `crt.gdshader` がCRT本体。
 他のエフェクトと同じ命名と配列への追加方法を使う。
 `presets/crt.tscn` は旧crt_display_testの後継。
-従来の色調補正・CRT・ビネットと保存済み調整値を保持し、起動時はmainに適用する。
+従来の色調補正・CRT・ビネットと保存済み調整値を保持し、選択中のmain・パターン・画像に適用する。
 個別ON/OFFとパラメータ変更は正式側の調整から独立している。
 
 CRTのスクリプト・シェーダー・UID・仕様書は前の移行でここへ移動済み。

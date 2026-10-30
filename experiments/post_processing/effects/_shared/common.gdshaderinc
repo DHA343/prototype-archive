@@ -1,5 +1,7 @@
 uniform sampler2D screen_texture : hint_screen_texture, source_color, repeat_disable, filter_linear;
+#ifndef LAB_NO_STRENGTH
 uniform float strength : hint_range(0.0, 1.0, 0.01) = 1.0;
+#endif
 
 vec2 lab_pixel_size() {
 	return 1.0 / vec2(textureSize(screen_texture, 0));

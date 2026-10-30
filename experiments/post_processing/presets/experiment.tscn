@@ -1,5 +1,10 @@
 [gd_scene format=3 uid="uid://bjr1ldrcu2mlr"]
 
 [ext_resource type="PackedScene" path="res://experiments/post_processing/testbed/testbed.tscn" id="1_je7uq"]
+[ext_resource type="Script" uid="uid://d12uwcn8et7ym" path="res://presentation/post_processing/post_process_effect.gd" id="2_wc102"]
+[ext_resource type="Resource" path="res://experiments/post_processing/effects/vhs/vhs.tres" id="3_wc102"]
 
 [node name="Experiment" unique_id=1427492686 instance=ExtResource("1_je7uq")]
+
+[node name="PostProcessing" parent="." index="0"]
+layer_2_effects = Array[ExtResource("2_wc102")]([ExtResource("3_wc102")])

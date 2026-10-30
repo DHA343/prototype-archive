@@ -1,0 +1,128 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://experiments/pinball/table.gd" id="1"]
+[ext_resource type="PackedScene" path="res://experiments/pinball/ball.tscn" id="2"]
+[ext_resource type="Script" path="res://experiments/pinball/wall.gd" id="2_nwoft"]
+[ext_resource type="PackedScene" path="res://experiments/pinball/flipper.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://experiments/pinball/bumper.tscn" id="5_1nxqn"]
+
+[sub_resource type="Curve2D" id="Curve2D_4phlr"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 192, -31, 0, 0, -192, -31, 0, 0, 576, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_lc8k0"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 360)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_o86r1"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 360)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_meod7"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 58, 10, 0, 0, -36, -12, 0, 0, 184, 40)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_tw4sh"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, -58, 10, 0, 0, 36, -12, 0, 0, -184, 40)
+}
+point_count = 2
+
+[node name="Table" type="Node2D" unique_id=1981854286]
+physics_interpolation_mode = 1
+script = ExtResource("1")
+
+[node name="Walls" type="Node2D" parent="." unique_id=1732704214]
+
+[node name="Ceiling" type="Path2D" parent="Walls" unique_id=2135093776]
+position = Vector2(32, 30)
+curve = SubResource("Curve2D_4phlr")
+script = ExtResource("2_nwoft")
+mirror_path = NodePath(".")
+
+[node name="LeftWall" type="Path2D" parent="Walls" unique_id=1360691868]
+position = Vector2(32, 0)
+curve = SubResource("Curve2D_lc8k0")
+script = ExtResource("2_nwoft")
+mirror_path = NodePath("../RightWall")
+
+[node name="RightWall" type="Path2D" parent="Walls" unique_id=1290427570]
+position = Vector2(608, 0)
+curve = SubResource("Curve2D_o86r1")
+script = ExtResource("2_nwoft")
+mirror_path = NodePath("../LeftWall")
+
+[node name="LeftGuide" type="Path2D" parent="Walls" unique_id=1979855450]
+position = Vector2(32, 270)
+curve = SubResource("Curve2D_meod7")
+script = ExtResource("2_nwoft")
+mirror_path = NodePath("../RightGuide")
+
+[node name="RightGuide" type="Path2D" parent="Walls" unique_id=1959836163]
+position = Vector2(608, 270)
+curve = SubResource("Curve2D_tw4sh")
+script = ExtResource("2_nwoft")
+mirror_path = NodePath("../LeftGuide")
+
+[node name="LeftFlipper" type="StaticBody2D" parent="." unique_id=531585564 instance=ExtResource("3")]
+physics_interpolation_mode = 1
+position = Vector2(216, 316)
+mirror_path = NodePath("../RightFlipper")
+
+[node name="RightFlipper" type="StaticBody2D" parent="." unique_id=158031937 instance=ExtResource("3")]
+physics_interpolation_mode = 1
+position = Vector2(424, 316)
+right_side = true
+mirror_path = NodePath("../LeftFlipper")
+
+[node name="Bumpers" type="Node2D" parent="." unique_id=2138946934]
+
+[node name="UpperLeft" type="StaticBody2D" parent="Bumpers" unique_id=444386415 instance=ExtResource("5_1nxqn")]
+position = Vector2(96, 48)
+radius = 28.0
+mirror_path = NodePath("../UpperRight")
+
+[node name="UpperRight" type="StaticBody2D" parent="Bumpers" unique_id=796573005 instance=ExtResource("5_1nxqn")]
+position = Vector2(544, 48)
+radius = 28.0
+mirror_path = NodePath("../UpperLeft")
+
+[node name="MiddleLeft" type="StaticBody2D" parent="Bumpers" unique_id=2130061156 instance=ExtResource("5_1nxqn")]
+position = Vector2(232, 156)
+mirror_path = NodePath("../MiddleRight")
+
+[node name="MiddleRight" type="StaticBody2D" parent="Bumpers" unique_id=331587199 instance=ExtResource("5_1nxqn")]
+position = Vector2(408, 156)
+mirror_path = NodePath("../MiddleLeft")
+
+[node name="LowerLeft" type="StaticBody2D" parent="Bumpers" unique_id=507863121 instance=ExtResource("5_1nxqn")]
+position = Vector2(68, 258)
+mirror_path = NodePath("../LowerRight")
+
+[node name="LowerRight" type="StaticBody2D" parent="Bumpers" unique_id=1234300767 instance=ExtResource("5_1nxqn")]
+position = Vector2(572, 258)
+mirror_path = NodePath("../LowerLeft")
+
+[node name="Target" type="Node2D" parent="." unique_id=184075460]
+position = Vector2(320, 44)
+
+[node name="Ball" type="CharacterBody2D" parent="." unique_id=42438252 instance=ExtResource("2")]
+physics_interpolation_mode = 1
+position = Vector2(242, 260)
+color = Color(0.945098, 0.941176, 0.917647, 1)
+
+[node name="Missiles" type="Node2D" parent="." unique_id=2068004244]
+z_index = 1

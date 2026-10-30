@@ -1,6 +1,6 @@
 # Phosphor Bloom
 
-Chromatic Aberration / GhostはPass 0で元信号へ適用する。
+Chromatic AberrationはPass 0で元信号へ適用する。
 Mask ModelがMask RedistributionならPass 1、Cell EmissionならPass 2でmaskを適用し、Pass 3のTextureとPass 4のOptical Spreadを適用した後に使う。
 BloomはPass 5で、mask・固定の明暗乗算・狭い光の広がりを適用したHDR出力をsourceにする。
 Bloom source の HDR 応答を制限する方式（旧 Limited）に一本化した。
@@ -106,6 +106,16 @@ Limit = 1.0 / 1.1 / 2.0 / 16.0 で値は有限、均一面は OFF と完全一�
 約1.999 は HDR バッファの半精度丸めによる。
 
 ## 描画構成と負荷
+
+Emissionへ共有するCanvasLayerの変換には、追従を含まない`transform`を使用する。
+共有CanvasはWorld2Dの親Canvasとの関係を保持しており、カメラ追従は親から適用される。
+`get_final_transform()`を渡すと追従が二重に適用され、Layer2のダメージ表示と
+Bloom sourceの位置がずれる。合成でずれた位置から発光分を差し引くため、黒い数字状の跡になる。
+
+Godot 4.7.2で実際のDamageNumberシーンを使い、320×180のHDR Viewportで確認した。
+Bloom以外のCRT処理を無効にして、Bloom OFFの画像とEmissionの画像を比較したところ、
+カメラの平行移動、1.2倍拡大と平行移動の両方で修正後は全ピクセルが完全一致した。
+旧変換ではそれぞれ1,837 / 3,790ピクセルにRGB差0.001を超える不一致が発生した。
 
 全解像度の HDR SubViewport を 6 枚使用する。
 Core を前段処理ごと再描画した Emission、共通 Source、Near の縦横、Far の縦横で構成する。

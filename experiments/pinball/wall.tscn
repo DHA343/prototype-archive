@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://experiments/pinball/wall.gd" id="1"]
+
+[sub_resource type="Curve2D" id="Curve"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 96, 0)
+}
+point_count = 2
+
+[node name="Wall" type="Path2D"]
+script = ExtResource("1")
+curve = SubResource("Curve")

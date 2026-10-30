@@ -58,6 +58,23 @@ func _draw() -> void:
 	_draw_color_polygons()
 
 
+func get_image_path() -> String:
+	if _image_index < 0 or _image_index >= images.size() or images[_image_index] == null:
+		return ""
+	return images[_image_index].resource_path
+
+
+func show_image(path: String) -> bool:
+	for index in images.size():
+		var image := images[index]
+		if image != null and image.resource_path == path:
+			_image_index = index
+			_ui.hide()
+			queue_redraw()
+			return true
+	return false
+
+
 func _show_pattern() -> void:
 	_image_index = -1
 	_ui.show()

@@ -8,6 +8,7 @@ enum Source {
 }
 
 const IMAGE_DIRECTORY: String = "res://experiments/post_processing/testbed/images"
+const STATE_PATH: String = "res://_temp/testbed_state.cfg"
 const IMAGE_EXTENSIONS: Array[String] = [
 	"png", "jpg", "jpeg", "webp", "bmp", "svg", "tga", "exr", "hdr", "dds", "ktx", "ktx2",
 ]
@@ -36,7 +37,7 @@ func _ready() -> void:
 	_pattern.set("images", _collect_images(IMAGE_DIRECTORY))
 	_watch_effects()
 	_create_buffers()
-	select_source(Source.MAIN)
+	select_source(_restore_source())
 
 
 func _process(_delta: float) -> void:
@@ -113,11 +114,45 @@ func select_source(value: Source) -> void:
 			(effect as ExperimentEffect).reset_history()
 	for viewport in _buffers:
 		viewport.get_child(0).call("reset_motion")
+	_save_state()
 
 
 func next_image() -> void:
 	_pattern.call("_show_next_image")
 	select_source(Source.IMAGE if int(_pattern.get("_image_index")) >= 0 else Source.PATTERN)
+
+
+func _restore_source() -> Source:
+	if not FileAccess.file_exists(STATE_PATH):
+		return Source.MAIN
+	var config := ConfigFile.new()
+	var error := config.load(STATE_PATH)
+	if error != OK:
+		push_warning("Could not load testbed state: %s." % error_string(error))
+		return Source.MAIN
+	var saved_source: Variant = config.get_value("display", "source", Source.MAIN)
+	if typeof(saved_source) != TYPE_INT or saved_source not in Source.values():
+		return Source.MAIN
+	if saved_source == Source.IMAGE:
+		var image_path: Variant = config.get_value("display", "image_path", "")
+		if image_path is not String or not _pattern.call("show_image", image_path):
+			return Source.PATTERN
+	return saved_source as Source
+
+
+func _save_state() -> void:
+	var directory := ProjectSettings.globalize_path(STATE_PATH.get_base_dir())
+	var error := DirAccess.make_dir_recursive_absolute(directory)
+	if error != OK:
+		push_warning("Could not create testbed state directory: %s." % error_string(error))
+		return
+	var config := ConfigFile.new()
+	config.set_value("display", "source", int(source))
+	if source == Source.IMAGE:
+		config.set_value("display", "image_path", String(_pattern.call("get_image_path")))
+	error = config.save(STATE_PATH)
+	if error != OK:
+		push_warning("Could not save testbed state: %s." % error_string(error))
 
 
 func _collect_images(directory: String) -> Array[Texture2D]:
@@ -139,7 +174,9 @@ func _collect_images(directory: String) -> Array[Texture2D]:
 func _on_effect_changed(effect: ExperimentEffect) -> void:
 	if not _modes.has(effect):
 		return
-	var mode := int(effect.get_parameter(&"mode"))
+	var mode: Variant = effect.get_parameter(&"mode")
+	if mode is not int:
+		return
 	if _modes[effect] != mode:
 		_modes[effect] = mode
 		_post.rebuild_effects()
@@ -149,11 +186,15 @@ func _watch_effects() -> void:
 	for effect in _post.layer_1_effects + _post.layer_2_effects:
 		if effect is ExperimentEffect:
 			var experiment := effect as ExperimentEffect
+			var mode: Variant = experiment.get_parameter(&"mode")
+			if mode is not int:
+				continue
 			if not _modes.has(experiment):
-				_modes[experiment] = int(experiment.get_parameter(&"mode"))
+				_modes[experiment] = mode
 				experiment.changed.connect(_on_effect_changed.bind(experiment), CONNECT_DEFERRED)
 	for experiment: ExperimentEffect in _modes.keys():
-		if not _post.layer_1_effects.has(experiment) and not _post.layer_2_effects.has(experiment):
+		var is_removed := not _post.layer_1_effects.has(experiment) and not _post.layer_2_effects.has(experiment)
+		if is_removed or experiment.get_parameter(&"mode") is not int:
 			experiment.changed.disconnect(_on_effect_changed.bind(experiment))
 			_modes.erase(experiment)
 

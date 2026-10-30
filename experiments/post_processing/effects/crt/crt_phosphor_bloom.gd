@@ -178,8 +178,9 @@ func _sync_viewports() -> void:
 		RenderingServer.viewport_set_canvas_stacking(
 			_core_viewport.get_viewport_rid(), canvas, layer.layer, 0
 		)
+		# Shared canvases retain their World2D parent, which already applies camera follow.
 		RenderingServer.viewport_set_canvas_transform(
-			_core_viewport.get_viewport_rid(), canvas, layer.get_final_transform()
+			_core_viewport.get_viewport_rid(), canvas, layer.transform
 		)
 	for canvas: RID in _attached_canvases.keys():
 		if not current_canvases.has(canvas):

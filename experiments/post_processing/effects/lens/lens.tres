@@ -1,0 +1,12 @@
+[gd_resource type="Resource" format=3 uid="uid://4xfunnx8hna1"]
+
+[ext_resource type="Script" uid="uid://b3hptdndilyr1" path="res://experiments/post_processing/effects/lens/lens.gd" id="1_effect"]
+
+[resource]
+resource_name = "Lens"
+script = ExtResource("1_effect")
+parameters = {
+&"mode": 6,
+&"strength": 0.999999977648
+}
+enabled = false

@@ -95,6 +95,11 @@ func _is_runtime(parameter: StringName) -> bool:
 
 
 func _get_property_list() -> Array[Dictionary]:
+	# Godot collects this callback from every base script; customize through the helper.
+	return _get_parameter_properties()
+
+
+func _get_parameter_properties() -> Array[Dictionary]:
 	var properties: Array[Dictionary] = []
 	var shader := get_shader()
 	if shader == null:

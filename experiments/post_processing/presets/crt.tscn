@@ -3,34 +3,52 @@
 [ext_resource type="PackedScene" path="res://experiments/post_processing/testbed/testbed.tscn" id="1_2vxy4"]
 [ext_resource type="Script" uid="uid://d12uwcn8et7ym" path="res://presentation/post_processing/post_process_effect.gd" id="2_8471h"]
 [ext_resource type="Script" uid="uid://du0elwyycowft" path="res://presentation/post_processing/effects/color_grading/color_grading.gd" id="3_6p5i1"]
+[ext_resource type="Script" uid="uid://cb038j6fowxyk" path="res://experiments/post_processing/effects/vhs/vhs.gd" id="4_8471h"]
 [ext_resource type="Script" uid="uid://4kmsj3ju6w87" path="res://experiments/post_processing/effects/crt/crt.gd" id="4_c5fkf"]
 [ext_resource type="Script" uid="uid://b6y73x0igwwoj" path="res://presentation/post_processing/effects/vignette/vignette.gd" id="5_v3gvn"]
 
 [sub_resource type="Resource" id="Resource_2vxy4"]
-resource_local_to_scene = true
 script = ExtResource("3_6p5i1")
+contrast = 1.02
+saturation = 1.05
 metadata/_custom_type_script = "uid://du0elwyycowft"
 
+[sub_resource type="Resource" id="Resource_c5fkf"]
+resource_name = "VHS"
+script = ExtResource("4_8471h")
+parameters = {
+&"amount": 0.0,
+&"chroma_offset": 0.0,
+&"dropout_amount": 0.0,
+&"dropout_length": 46.0,
+&"dropout_shift": 4.0,
+&"frame_rate": 30.0,
+&"luma_blur": 0.0,
+&"radius": 3.0,
+&"row_group_size": 1,
+&"saturation": 0.999999977648,
+&"signal_lines": 480.0,
+&"speed": 0.95000001415614,
+&"time_smoothing": 0.0
+}
+
 [sub_resource type="Resource" id="Resource_8471h"]
-resource_local_to_scene = true
 script = ExtResource("4_c5fkf")
 rgb_red_offset = Vector2(-3, 0.5)
 rgb_blue_offset = Vector2(3, -0.5)
 rgb_red_radial = -4.0
 rgb_blue_radial = 4.0
 rgb_strength = 1.0
-ghost_radial = 6.0
-ghost_strength = 0.0
 sharpness = 0.5
 signal_pitch = 2.0
 mask_model = 1
-mask_strength = 0.75
+mask_strength = 1.0
 mask_pitch = 4
 row_height = 2
+texture_enabled = false
 texture_size = 1.8
 
 [sub_resource type="Resource" id="Resource_6p5i1"]
-resource_local_to_scene = true
 script = ExtResource("5_v3gvn")
 strength = 0.6
 radius = 0.5
@@ -41,4 +59,4 @@ metadata/_custom_type_script = "uid://b6y73x0igwwoj"
 [node name="CRT" unique_id=682829650 instance=ExtResource("1_2vxy4")]
 
 [node name="PostProcessing" parent="." index="0"]
-layer_2_effects = Array[ExtResource("2_8471h")]([SubResource("Resource_2vxy4"), SubResource("Resource_8471h"), SubResource("Resource_6p5i1")])
+layer_2_effects = Array[ExtResource("2_8471h")]([SubResource("Resource_2vxy4"), SubResource("Resource_c5fkf"), SubResource("Resource_8471h"), SubResource("Resource_6p5i1")])

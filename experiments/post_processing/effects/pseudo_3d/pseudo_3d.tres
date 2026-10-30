@@ -1,0 +1,13 @@
+[gd_resource type="Resource" format=3 uid="uid://c5n2n0qvcga8j"]
+
+[ext_resource type="Script" uid="uid://be571j0f885ug" path="res://experiments/post_processing/effects/pseudo_3d/pseudo_3d.gd" id="1_effect"]
+
+[resource]
+resource_name = "Pseudo 3D"
+script = ExtResource("1_effect")
+parameters = {
+&"depth_source": 0,
+&"light_position": Vector2(0.5, 0.2),
+&"mode": 6,
+&"radius": 12.0
+}

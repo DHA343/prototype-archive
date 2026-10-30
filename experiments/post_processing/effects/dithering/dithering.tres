@@ -1,0 +1,13 @@
+[gd_resource type="Resource" format=3 uid="uid://qyhnkkn03ajq"]
+
+[ext_resource type="Script" uid="uid://bsbdb07ut730x" path="res://experiments/post_processing/effects/dithering/dithering.gd" id="1_effect"]
+
+[resource]
+resource_name = "Dithering"
+script = ExtResource("1_effect")
+parameters = {
+&"mode": 2,
+&"scale": 1.0,
+&"strength": 0.999999977648
+}
+enabled = false

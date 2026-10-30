@@ -86,28 +86,6 @@ var rgb_strength: float = 0.3:
 		rgb_strength = value
 		emit_changed()
 
-@export_group("Ghost", "ghost_")
-## Full-color image displacement at the corners. Zero aligns it with the original.
-## Positive expands about the screen center, negative contracts. No directional echo.
-@export_range(-16.0, 16.0, 0.1, "suffix:px")
-var ghost_radial: float = 5.0:
-	set(value):
-		if is_equal_approx(ghost_radial, value):
-			return
-
-		ghost_radial = value
-		emit_changed()
-
-## Weight of the full-color secondary image relative to the original. Zero disables it.
-@export_range(0.0, 1.0, 0.01)
-var ghost_strength: float = 0.2:
-	set(value):
-		if is_equal_approx(ghost_strength, value):
-			return
-
-		ghost_strength = value
-		emit_changed()
-
 @export_group("Signal Reconstruction")
 @export var signal_enabled: bool = true:
 	set(value):
@@ -371,8 +349,6 @@ func apply_to_pass(material: ShaderMaterial, pass_index: int) -> void:
 		material.set_shader_parameter(&"rgb_red_radial", rgb_red_radial)
 		material.set_shader_parameter(&"rgb_blue_radial", rgb_blue_radial)
 		material.set_shader_parameter(&"rgb_strength", rgb_strength)
-		material.set_shader_parameter(&"ghost_radial", ghost_radial)
-		material.set_shader_parameter(&"ghost_strength", ghost_strength)
 		return
 
 	if pass_index == 1:
@@ -410,8 +386,7 @@ func is_pass_enabled(pass_index: int) -> bool:
 			has_chromatic_offset = rgb_red_offset != Vector2.ZERO or rgb_blue_offset != Vector2.ZERO
 		else:
 			has_chromatic_offset = rgb_red_radial != 0.0 or rgb_blue_radial != 0.0
-		return (rgb_strength > 0.0 and has_chromatic_offset
-			or ghost_strength > 0.0 and ghost_radial != 0.0)
+		return rgb_strength > 0.0 and has_chromatic_offset
 	if pass_index == 1:
 		return true
 	if pass_index == 2:

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://drrnorl2khd3t"]
+
+[ext_resource type="PackedScene" uid="uid://se2hha1mxafa" path="res://experiments/missiles/missile.tscn" id="1"]
+
+[node name="Missile" unique_id=1260302644 instance=ExtResource("1")]

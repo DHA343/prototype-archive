@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://cfebbcao8yb0n"]
+
+[ext_resource type="Script" uid="uid://rq61g51essy4" path="res://experiments/pinball/preview.gd" id="1"]
+[ext_resource type="PackedScene" path="res://experiments/pinball/table.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://1cph7125gclc" path="res://presentation/post_processing/post_processing.tscn" id="3"]
+
+[node name="PinballPreview" type="Control" unique_id=1394862140]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1986097137]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.098039, 0.105882, 0.12549, 1)
+
+[node name="Display" type="SubViewportContainer" parent="." unique_id=447767665]
+texture_filter = 1
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+
+[node name="Viewport" type="SubViewport" parent="Display" unique_id=543578063]
+disable_3d = true
+handle_input_locally = false
+msaa_2d = 2
+use_hdr_2d = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="Table" parent="Display/Viewport" unique_id=1100044219 instance=ExtResource("2")]
+
+[node name="PostProcessing" parent="." unique_id=1799856306 instance=ExtResource("3")]
